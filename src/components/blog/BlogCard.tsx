@@ -1,24 +1,23 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { Blog } from "@/api/blogs"
+import { Badge } from "@/components/ui/badge"
 
-export default function BlogCard({
-  blog,
-  onClick,
-}: {
-  blog: Blog
-  onClick: () => void
-}) {
+export default function BlogCard({ blog, onClick }: any) {
   return (
     <Card
-      onClick={onClick}
-      className="cursor-pointer hover:shadow-md transition"
+      className="cursor-pointer hover:shadow-md"
+      onClick={() => onClick(blog.id)}
     >
       <CardContent className="p-4 space-y-2">
-        <span className="text-xs text-blue-600 font-semibold">
-          {blog.category}
-        </span>
+        <div className="flex gap-2">
+          {blog.category.map((cat: string) => (
+            <Badge key={cat}>{cat}</Badge>
+          ))}
+        </div>
+
         <h3 className="font-semibold">{blog.title}</h3>
-        <p className="text-sm text-slate-600">{blog.description}</p>
+        <p className="text-sm text-muted-foreground">
+          {blog.description}
+        </p>
       </CardContent>
     </Card>
   )

@@ -1,19 +1,22 @@
 import { useState } from "react"
-import BlogList from "@/components/blog/BlogList"
-import BlogDetails from "@/components/blog/BlogDetails"
+import BlogList from "../components/blog/BlogList"
+import BlogDetail from "../components/blog/BlogDetails"
+import CreateBlogForm from "../components/blog/CreateBlogForm"
 
 export default function Home() {
-  const [selectedBlog, setSelectedBlog] = useState<number | null>(null)
+  const [selectedBlogId, setSelectedBlogId] = useState<number | null>(null)
 
   return (
-    <div className="min-h-screen bg-slate-100 p-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-1">
-          <BlogList onSelect={setSelectedBlog} />
-        </div>
-        <div className="lg:col-span-3">
-          {selectedBlog && <BlogDetails blogId={selectedBlog} />}
-        </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+      {/* Left Panel */}
+      <div className="space-y-6">
+        <CreateBlogForm />
+        <BlogList onSelect={setSelectedBlogId} />
+      </div>
+
+      {/* Right Panel */}
+      <div className="md:col-span-2">
+        <BlogDetail blogId={selectedBlogId} />
       </div>
     </div>
   )

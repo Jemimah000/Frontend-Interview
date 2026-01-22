@@ -1,24 +1,23 @@
-import axios from "axios"
-import type { Blog } from "@/types/blogs"
+const BASE_URL = "http://localhost:3000"
 
-const API_URL = "http://localhost:3000"
-
-export const getBlogs = async (): Promise<Blog[]> => {
-  const res = await axios.get(`${API_URL}/blogs`)
-  return res.data
+export const getBlogs = async () => {
+  const res = await fetch(`${BASE_URL}/blogs`)
+  if (!res.ok) throw new Error("Failed to fetch blogs")
+  return res.json()
 }
 
-export const getBlogById = async (id: number): Promise<Blog> => {
-  const res = await axios.get(`${API_URL}/blogs/${id}`)
-  return res.data
+export const getBlogById = async (id: number) => {
+  const res = await fetch(`${BASE_URL}/blogs/${id}`)
+  if (!res.ok) throw new Error("Failed to fetch blog")
+  return res.json()
 }
 
-export const createBlog = async (blogData: any) => {
-  // Convert tags string to array
-  const blog = {
-    ...blogData,
-    tags: blogData.tags ? blogData.tags.split(",").map((t: string) => t.trim()).filter((t: string) => t) : [],
-  }
-  const res = await axios.post(`${API_URL}/blogs`, blog)
-  return res.data
+export const createBlog = async (blog: any) => {
+  const res = await fetch(`${BASE_URL}/blogs`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(blog),
+  })
+  if (!res.ok) throw new Error("Failed to create blog")
+  return res.json()
 }
