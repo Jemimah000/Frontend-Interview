@@ -25,5 +25,5 @@ export interface CreateBlogInput {
   content: string;
   coverImage: string;
   genre: Genre;
-  authorId: string;
+  authorName: string;
 }

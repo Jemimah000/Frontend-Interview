@@ -1,4 +1,4 @@
-import type { Blog, CreateBlogInput } from '@/types/blog';
+import type { Blog, CreateBlogInput, Author } from '@/types/blog';
 
 // Mock data for demonstration
 const mockAuthors = [
@@ -229,7 +229,14 @@ export const api = {
   // POST /blogs - Create a new blog
   createBlog: async (input: CreateBlogInput): Promise<Blog> => {
     await delay(1000);
-    const author = mockAuthors.find(a => a.id === input.authorId) || mockAuthors[0];
+    
+    // Create a new author object from the provided name
+    const newAuthor: Author = {
+      id: String(Date.now()),
+      name: input.authorName,
+      avatar: mockAuthors[Math.floor(Math.random() * mockAuthors.length)].avatar,
+      bio: 'New author'
+    };
     
     const newBlog: Blog = {
       id: String(Date.now()),
@@ -238,7 +245,7 @@ export const api = {
       content: input.content,
       coverImage: input.coverImage,
       genre: input.genre,
-      author,
+      author: newAuthor,
       createdAt: new Date().toISOString().split('T')[0],
       readTime: Math.ceil(input.content.split(' ').length / 200)
     };

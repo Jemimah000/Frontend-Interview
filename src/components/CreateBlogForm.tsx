@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useCreateBlog, useAuthors } from '@/hooks/useBlogs';
+// 👇 Removed useAuthors since we don't need the list anymore
+import { useCreateBlog } from '@/hooks/useBlogs'; 
 import type { Genre } from '@/types/blog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,13 +33,14 @@ import {
 import { Plus, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
+// 👇 Updated Schema: authorName is now a string input, not an ID
 const formSchema = z.object({
   title: z.string().min(3, 'Title must be at least 3 characters'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   content: z.string().min(50, 'Content must be at least 50 characters'),
   coverImage: z.string().url('Must be a valid URL'),
   genre: z.enum(['suspense', 'romance', 'thriller', 'action', 'horror']),
-  authorId: z.string().min(1, 'Please select an author'),
+  authorName: z.string().min(2, 'Author name must be at least 2 characters'),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -59,7 +61,7 @@ const coverImageSuggestions = [
 
 export const CreateBlogForm = () => {
   const [open, setOpen] = useState(false);
-  const { data: authors } = useAuthors();
+  // Removed const { data: authors } = useAuthors();
   const createBlog = useCreateBlog();
 
   const form = useForm<FormValues>({
@@ -70,7 +72,7 @@ export const CreateBlogForm = () => {
       content: '',
       coverImage: coverImageSuggestions[0],
       genre: 'suspense',
-      authorId: '',
+      authorName: '', // Updated default value
     },
   });
 
@@ -82,7 +84,9 @@ export const CreateBlogForm = () => {
         content: values.content,
         coverImage: values.coverImage,
         genre: values.genre,
-        authorId: values.authorId, 
+        // 👇 Sending the typed name. 
+        // Note: Ensure your backend/API expects 'authorName' or 'author' string, not an ID.
+        authorName: values.authorName, 
       });
       toast.success('Story published successfully!');
       form.reset();
@@ -147,27 +151,16 @@ export const CreateBlogForm = () => {
                 )}
               />
               
-              {/* Author Select */}
+              {/* 👇 CHANGED: Replaced Select with Input for Author */}
               <FormField
                 control={form.control}
-                name="authorId"
+                name="authorName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Author</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select author" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {authors?.map((author) => (
-                          <SelectItem key={author.id} value={author.id}>
-                            {author.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <Input placeholder="Enter author name" {...field} />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
