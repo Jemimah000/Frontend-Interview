@@ -23,10 +23,14 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        
+        // 👇👇👇 UPDATED SECTION STARTS HERE 👇👇👇
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#0ea5e9", // Light Blue
+          foreground: "#ffffff", // White text
         },
+        // 👆👆👆 UPDATED SECTION ENDS HERE 👆👆👆
+
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",

@@ -1,4 +1,4 @@
-import { Blog, CreateBlogInput, Genre } from '@/types/blog';
+import type { Blog, CreateBlogInput } from '@/types/blog';
 
 // Mock data for demonstration
 const mockAuthors = [
@@ -167,7 +167,7 @@ She crossed the dance floor, every step calculated, every smile a weapon. When V
 Viktor's confident smile flickered. For the first time, doubt crept into his eyes.
 
 This was going to be a long night.`,
-    coverImage: 'https://images.unsplash.com/photo-1606116669915-e946e0e82b69?w=800&h=500&fit=crop',
+    coverImage: 'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=800&h=500&fit=crop',
     genre: 'thriller',
     author: mockAuthors[0],
     createdAt: '2024-01-05',

@@ -1,6 +1,6 @@
-import { Blog } from '@/types/blog';
+import type { Blog } from '@/types/blog';
 import { GenreBadge } from './GenreBadge';
-import { Clock, Calendar, ArrowLeft } from 'lucide-react';
+import { Clock, Calendar, ArrowLeft, BookOpen, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -15,22 +15,48 @@ export const BlogDetail = ({ blog, isLoading, onBack }: BlogDetailProps) => {
     return <BlogDetailSkeleton />;
   }
 
+  // 👇 UPDATED: Professional Empty State Design
   if (!blog) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-center p-8">
-        <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mb-6">
-          <span className="text-4xl">📖</span>
+      <div className="h-full flex flex-col items-center justify-center p-8 text-center animate-fade-in relative overflow-hidden">
+        {/* Background Decorative Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 max-w-md">
+          {/* Stylized Icon Container */}
+          <div className="mb-10 relative mx-auto w-24 h-24">
+            {/* Glowing blur behind */}
+            <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl animate-pulse" />
+            
+            {/* Main Book Icon Card */}
+            <div className="relative w-full h-full bg-card border border-border rounded-2xl flex items-center justify-center shadow-2xl transform -rotate-6 transition-transform hover:rotate-0 duration-700">
+              <BookOpen className="w-10 h-10 text-primary" strokeWidth={1.5} />
+            </div>
+            
+            {/* Floating Sparkle Icon */}
+            <div className="absolute -right-3 -top-3 w-10 h-10 bg-background border border-border rounded-xl flex items-center justify-center shadow-lg transform rotate-12 animate-bounce delay-100">
+              <Sparkles className="w-5 h-5 text-yellow-500/80" strokeWidth={1.5} />
+            </div>
+          </div>
+
+          <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4 tracking-tight">
+            Welcome to StoryVault
+          </h3>
+          
+          <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+            Your escape into worlds unknown. Select a story from the sidebar to begin your reading journey.
+          </p>
+
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-medium animate-pulse">
+            <ArrowLeft className="w-4 h-4" />
+            <span>Browse stories on the left</span>
+          </div>
         </div>
-        <h3 className="font-display text-2xl font-semibold text-foreground mb-2">
-          Select a Story
-        </h3>
-        <p className="text-muted-foreground max-w-sm">
-          Choose a story from the list to begin your reading journey
-        </p>
       </div>
     );
   }
 
+  // 👇 Existing Blog Content Layout
   return (
     <article className="h-full overflow-y-auto animate-fade-in">
       <div className="relative h-72 md:h-96">

@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
-import { CreateBlogInput } from '@/types/blog';
+import type { CreateBlogInput } from '@/types/blog';
 
 export const useBlogs = () => {
   return useQuery({

@@ -1,6 +1,6 @@
-import { Blog } from '@/types/blog';
+import type { Blog } from '@/types/blog';
 import { GenreBadge } from './GenreBadge';
-import { Clock, User } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface BlogCardProps {

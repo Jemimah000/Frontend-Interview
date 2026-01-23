@@ -15,8 +15,9 @@
     --popover: 20 14% 7%;
     --popover-foreground: 40 20% 95%;
 
-    --primary: 35 90% 55%;
-    --primary-foreground: 20 14% 4%;
+    /* Primary color: Light Blue (Sky-500) */
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 20 14% 12%;
     --secondary-foreground: 40 20% 90%;
@@ -24,7 +25,8 @@
     --muted: 20 14% 15%;
     --muted-foreground: 40 10% 55%;
 
-    --accent: 35 90% 55%;
+    /* Accent color: Light Blue */
+    --accent: 199 89% 48%;
     --accent-foreground: 20 14% 4%;
 
     --destructive: 0 72% 51%;
@@ -32,16 +34,22 @@
 
     --border: 20 14% 18%;
     --input: 20 14% 18%;
-    --ring: 35 90% 55%;
+    /* Focus ring color: Light Blue */
+    --ring: 199 89% 48%;
 
     --radius: 0.75rem;
 
     /* Custom tokens */
     --gradient-dark: linear-gradient(135deg, hsl(20 14% 4%) 0%, hsl(20 14% 8%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(20 14% 9%) 0%, hsl(20 14% 5%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(35 90% 55%) 0%, hsl(25 85% 45%) 100%);
+    
+    /* Gradient using Blue hues */
+    --gradient-accent: linear-gradient(135deg, hsl(199 89% 48%) 0%, hsl(190 85% 45%) 100%);
+    
     --shadow-card: 0 4px 24px -4px hsl(0 0% 0% / 0.5);
-    --shadow-glow: 0 0 40px -10px hsl(35 90% 55% / 0.3);
+    
+    /* Shadow glow: Blue */
+    --shadow-glow: 0 0 40px -10px hsl(199 89% 48% / 0.3);
 
     /* Genre colors */
     --genre-suspense: 45 100% 50%;
@@ -153,5 +161,54 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* 👇👇👇 NEW CUSTOM SCROLLBAR (Book on a Thread) 👇👇👇 */
+
+  /* The Scrollbar Area */
+  ::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  /* The "Thread" (Track) */
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+    /* Creates a thin blue line in the center */
+    background-image: linear-gradient(
+      to right,
+      transparent 0%,
+      transparent 44%,
+      hsl(199 89% 48% / 0.5) 44%,
+      hsl(199 89% 48% / 0.5) 56%,
+      transparent 56%,
+      transparent 100%
+    );
+  }
+
+  /* The "Book" (Thumb) */
+  ::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 0px;
+    
+    /* SVG Book Icon (Blue) */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230ea5e9' stroke='%23020617' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/%3E%3C/svg%3E");
+    
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 100% auto;
+    
+    /* Ensures the icon doesn't stretch weirdly */
+    min-height: 50px; 
+  }
+
+  /* Hover State: Lighter Blue Book */
+  ::-webkit-scrollbar-thumb:hover {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2338bdf8' stroke='%23020617' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/%3E%3C/svg%3E");
+  }
+
+  /* Firefox Fallback */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(199 89% 48%) transparent;
   }
 }

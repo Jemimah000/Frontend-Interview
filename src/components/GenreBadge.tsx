@@ -1,4 +1,4 @@
-import { Genre } from '@/types/blog';
+import type { Genre } from '@/types/blog';
 import { cn } from '@/lib/utils';
 
 interface GenreBadgeProps {

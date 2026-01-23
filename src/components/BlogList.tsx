@@ -3,7 +3,7 @@ import { useBlogs } from '@/hooks/useBlogs';
 import { BlogCard } from './BlogCard';
 import { BlogCardSkeleton } from './BlogCardSkeleton';
 import { CreateBlogForm } from './CreateBlogForm';
-import { Genre } from '@/types/blog';
+import type { Genre } from '@/types/blog';
 import { Button } from '@/components/ui/button';
 import { AlertCircle } from 'lucide-react';
 
@@ -36,7 +36,8 @@ export const BlogList = ({ selectedId, onSelectBlog }: BlogListProps) => {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="font-display text-3xl font-bold text-foreground">
-              Story<span className="text-gradient">Vault</span>
+              {/* 👇 UPDATED: Changed from 'text-gradient' to 'text-primary' */}
+              Story<span className="text-primary">Vault</span>
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
               Discover captivating short stories

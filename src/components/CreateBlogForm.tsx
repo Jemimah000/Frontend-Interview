@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useCreateBlog, useAuthors } from '@/hooks/useBlogs';
-import { Genre } from '@/types/blog';
+import type { Genre } from '@/types/blog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -51,10 +51,14 @@ const genres: { value: Genre; label: string }[] = [
   { value: 'horror', label: 'Horror' },
 ];
 
+// 👇 UPDATED: Replaced the broken link with a working "Foggy Forest" image
 const coverImageSuggestions = [
-  'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=800&h=500&fit=crop',
-  'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=800&h=500&fit=crop',
-  'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&h=500&fit=crop',
+  'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&h=500&fit=crop', // Library
+  'https://images.unsplash.com/photo-1506452305024-9d3f02d1c9b5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Foggy Forest
+  'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=800&h=500&fit=crop', // Sunset
+  'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=800&h=500&fit=crop', // Old Books
+  'https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=800&h=500&fit=crop', // Neon City
+  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=500&fit=crop', // Space
 ];
 
 export const CreateBlogForm = () => {
@@ -201,7 +205,7 @@ export const CreateBlogForm = () => {
                   <FormControl>
                     <Input placeholder="https://..." {...field} />
                   </FormControl>
-                  <div className="flex gap-2 mt-2">
+                  <div className="flex flex-wrap gap-2 mt-2">
                     {coverImageSuggestions.map((url, i) => (
                       <button
                         key={i}
