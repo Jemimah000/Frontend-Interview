@@ -36,6 +36,8 @@ const Index = () => {
             blog={selectedBlog}
             isLoading={isLoading}
             onBack={() => setSelectedBlogId(null)}
+            // 👇 ADDED THIS LINE: This allows the "Browse" button to work!
+            onSelect={setSelectedBlogId}
           />
         </div>
       </div>

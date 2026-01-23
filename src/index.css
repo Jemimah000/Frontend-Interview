@@ -1,3 +1,4 @@
+/* stylelint-disable at-rule-no-unknown */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
@@ -15,7 +16,7 @@
     --popover: 20 14% 7%;
     --popover-foreground: 40 20% 95%;
 
-    /* Primary color: Light Blue (Sky-500) */
+    /* Primary color: Light Blue */
     --primary: 199 89% 48%;
     --primary-foreground: 0 0% 100%;
 
@@ -34,7 +35,6 @@
 
     --border: 20 14% 18%;
     --input: 20 14% 18%;
-    /* Focus ring color: Light Blue */
     --ring: 199 89% 48%;
 
     --radius: 0.75rem;
@@ -42,18 +42,13 @@
     /* Custom tokens */
     --gradient-dark: linear-gradient(135deg, hsl(20 14% 4%) 0%, hsl(20 14% 8%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(20 14% 9%) 0%, hsl(20 14% 5%) 100%);
-    
-    /* Gradient using Blue hues */
     --gradient-accent: linear-gradient(135deg, hsl(199 89% 48%) 0%, hsl(190 85% 45%) 100%);
-    
     --shadow-card: 0 4px 24px -4px hsl(0 0% 0% / 0.5);
-    
-    /* Shadow glow: Blue */
     --shadow-glow: 0 0 40px -10px hsl(199 89% 48% / 0.3);
 
     /* Genre colors */
     --genre-suspense: 45 100% 50%;
-    --genre-romance: 350 80% 60%;
+    --genre-romance: 340 85% 60%;
     --genre-thriller: 200 90% 50%;
     --genre-action: 25 100% 55%;
     --genre-horror: 270 70% 50%;
@@ -82,12 +77,10 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
   }
-
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
   }
@@ -107,34 +100,41 @@
     box-shadow: var(--shadow-glow);
   }
 
+  /* 👇 UPDATED: Added !important to force the black background */
+
   .genre-badge-suspense {
-    background-color: hsl(var(--genre-suspense) / 0.15);
-    color: hsl(var(--genre-suspense));
-    border-color: hsl(var(--genre-suspense) / 0.3);
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    color: hsl(var(--genre-suspense)) !important;
+    border-color: hsl(var(--genre-suspense) / 0.5);
+    backdrop-filter: blur(4px);
   }
 
   .genre-badge-romance {
-    background-color: hsl(var(--genre-romance) / 0.15);
-    color: hsl(var(--genre-romance));
-    border-color: hsl(var(--genre-romance) / 0.3);
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    color: hsl(var(--genre-romance)) !important;
+    border-color: hsl(var(--genre-romance) / 0.5);
+    backdrop-filter: blur(4px);
   }
 
   .genre-badge-thriller {
-    background-color: hsl(var(--genre-thriller) / 0.15);
-    color: hsl(var(--genre-thriller));
-    border-color: hsl(var(--genre-thriller) / 0.3);
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    color: hsl(var(--genre-thriller)) !important;
+    border-color: hsl(var(--genre-thriller) / 0.5);
+    backdrop-filter: blur(4px);
   }
 
   .genre-badge-action {
-    background-color: hsl(var(--genre-action) / 0.15);
-    color: hsl(var(--genre-action));
-    border-color: hsl(var(--genre-action) / 0.3);
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    color: hsl(var(--genre-action)) !important;
+    border-color: hsl(var(--genre-action) / 0.5);
+    backdrop-filter: blur(4px);
   }
 
   .genre-badge-horror {
-    background-color: hsl(var(--genre-horror) / 0.15);
-    color: hsl(var(--genre-horror));
-    border-color: hsl(var(--genre-horror) / 0.3);
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    color: hsl(var(--genre-horror)) !important;
+    border-color: hsl(var(--genre-horror) / 0.5);
+    backdrop-filter: blur(4px);
   }
 }
 
@@ -142,16 +142,13 @@
   .animate-fade-in {
     animation: fadeIn 0.5s ease-out forwards;
   }
-
   .animate-slide-up {
     animation: slideUp 0.4s ease-out forwards;
   }
-
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
   }
-
   @keyframes slideUp {
     from { 
       opacity: 0;
@@ -163,47 +160,50 @@
     }
   }
 
-  /* 👇👇👇 NEW CUSTOM SCROLLBAR (Book on a Thread) 👇👇👇 */
+  /* 👇👇👇 REALISTIC BOOK SCROLLBAR 👇👇👇 */
 
-  /* The Scrollbar Area */
+  /* 1. The Scrollbar Width (Make it slightly wider for the book) */
   ::-webkit-scrollbar {
-    width: 16px;
+    width: 24px; /* Increased from 16px to fit the book image better */
   }
 
-  /* The "Thread" (Track) */
+  /* 2. The "Thread" (Track) - The line behind the book */
   ::-webkit-scrollbar-track {
     background-color: transparent;
-    /* Creates a thin blue line in the center */
+    /* This creates the thin blue string in the center */
     background-image: linear-gradient(
       to right,
       transparent 0%,
-      transparent 44%,
-      hsl(199 89% 48% / 0.5) 44%,
-      hsl(199 89% 48% / 0.5) 56%,
-      transparent 56%,
+      transparent 48%,
+      hsl(199 89% 48% / 0.5) 48%, /* Blue Line */
+      hsl(199 89% 48% / 0.5) 52%,
+      transparent 52%,
       transparent 100%
     );
   }
 
-  /* The "Book" (Thumb) */
+  /* 3. The "Book" (Thumb) - The Image you provided */
   ::-webkit-scrollbar-thumb {
     background-color: transparent;
     border-radius: 0px;
+    border: none;
     
-    /* SVG Book Icon (Blue) */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230ea5e9' stroke='%23020617' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/%3E%3C/svg%3E");
+    /* 👇 YOUR IMAGE URL HERE */
+    background-image: url('https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTEwL3JtNTM1LWJvb2stMDIucG5n');
     
     background-repeat: no-repeat;
-    background-position: center top;
-    background-size: 100% auto;
+    background-position: center center;
     
-    /* Ensures the icon doesn't stretch weirdly */
-    min-height: 50px; 
+    /* This ensures the book fits the width of the scrollbar */
+    background-size: contain; 
+    
+    /* Give the book enough height so it doesn't look squished */
+    min-height: 60px; 
   }
 
-  /* Hover State: Lighter Blue Book */
+  /* Hover State (Optional: Make it slightly transparent on hover) */
   ::-webkit-scrollbar-thumb:hover {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2338bdf8' stroke='%23020617' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/%3E%3C/svg%3E");
+    opacity: 0.9;
   }
 
   /* Firefox Fallback */

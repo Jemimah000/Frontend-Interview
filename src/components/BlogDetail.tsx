@@ -1,4 +1,5 @@
 import type { Blog } from '@/types/blog';
+import { useBlogs } from '@/hooks/useBlogs'; // 1. Import the hook
 import { GenreBadge } from './GenreBadge';
 import { Clock, Calendar, ArrowLeft, BookOpen, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,57 +9,79 @@ interface BlogDetailProps {
   blog: Blog | null | undefined;
   isLoading: boolean;
   onBack: () => void;
+  onSelect: (id: string) => void; // 2. New prop to handle selection
 }
 
-export const BlogDetail = ({ blog, isLoading, onBack }: BlogDetailProps) => {
+export const BlogDetail = ({ blog, isLoading, onBack, onSelect }: BlogDetailProps) => {
+  // 3. Fetch blogs to find the first one
+  const { data: blogs } = useBlogs();
+
+  // 4. Function to navigate to the first story
+  const handleBrowseClick = () => {
+    if (blogs && blogs.length > 0) {
+      onSelect(blogs[0].id);
+    }
+  };
+
   if (isLoading) {
     return <BlogDetailSkeleton />;
   }
 
-  // 👇 UPDATED: Professional Empty State Design
+  // Welcome Screen
   if (!blog) {
     return (
-      <div className="h-full flex flex-col items-center justify-center p-8 text-center animate-fade-in relative overflow-hidden">
-        {/* Background Decorative Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="h-full flex flex-col items-center justify-center p-8 text-center animate-fade-in relative overflow-hidden bg-slate-950">
+        
+        {/* Background Effects */}
+        <div className="absolute inset-0 z-0 opacity-[0.03]" 
+             style={{ 
+               backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', 
+               backgroundSize: '40px 40px' 
+             }} 
+        />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none translate-y-1/2 -translate-x-1/2" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-radial-gradient from-primary/5 to-transparent blur-3xl pointer-events-none" />
+
 
         <div className="relative z-10 max-w-md">
-          {/* Stylized Icon Container */}
-          <div className="mb-10 relative mx-auto w-24 h-24">
-            {/* Glowing blur behind */}
-            <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl animate-pulse" />
-            
-            {/* Main Book Icon Card */}
-            <div className="relative w-full h-full bg-card border border-border rounded-2xl flex items-center justify-center shadow-2xl transform -rotate-6 transition-transform hover:rotate-0 duration-700">
-              <BookOpen className="w-10 h-10 text-primary" strokeWidth={1.5} />
+          
+          {/* Animated Icon */}
+          <div className="mb-10 relative mx-auto w-24 h-24 group">
+            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-transparent via-primary/80 to-transparent opacity-75 blur-sm animate-spin-slow" />
+            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-bl from-transparent via-primary/40 to-transparent opacity-50 blur-md animate-spin-slow duration-500" />
+            <div className="relative w-full h-full bg-card/50 backdrop-blur-xl border border-primary/20 rounded-2xl flex items-center justify-center shadow-2xl z-10">
+              <BookOpen className="w-10 h-10 text-primary drop-shadow-[0_0_8px_rgba(14,165,233,0.5)]" strokeWidth={1.5} />
             </div>
-            
-            {/* Floating Sparkle Icon */}
-            <div className="absolute -right-3 -top-3 w-10 h-10 bg-background border border-border rounded-xl flex items-center justify-center shadow-lg transform rotate-12 animate-bounce delay-100">
+            <div className="absolute -right-3 -top-3 w-10 h-10 bg-background/80 backdrop-blur border border-border rounded-xl flex items-center justify-center shadow-lg transform rotate-12 animate-bounce delay-100 z-20">
               <Sparkles className="w-5 h-5 text-yellow-500/80" strokeWidth={1.5} />
             </div>
           </div>
 
-          <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4 tracking-tight">
-            Welcome to StoryVault
+          <h3 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight drop-shadow-lg">
+             Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-sky-300">StoryVault</span>
           </h3>
           
-          <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-            Your escape into worlds unknown. Select a story from the sidebar to begin your reading journey.
+          <p className="text-muted-foreground text-lg mb-8 leading-relaxed italic max-w-sm mx-auto">
+            "Between these pages, entire worlds are waiting to be discovered."
           </p>
 
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-medium animate-pulse">
-            <ArrowLeft className="w-4 h-4" />
-            <span>Browse stories on the left</span>
-          </div>
+          <Button 
+            onClick={handleBrowseClick} // 5. Attach the click handler
+            variant="outline" 
+            className="rounded-full px-8 py-6 border-primary/30 bg-background/50 backdrop-blur-sm hover:bg-primary/10 hover:border-primary/60 hover:shadow-[0_0_20px_rgba(14,165,233,0.15)] transition-all duration-300 group text-white hover:text-white"
+          >
+             <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+             Browse stories on the left
+          </Button>
         </div>
       </div>
     );
   }
 
-  // 👇 Existing Blog Content Layout
+  // Existing Blog Content Layout
   return (
-    <article className="h-full overflow-y-auto animate-fade-in">
+    <article className="h-full overflow-y-auto animate-fade-in custom-scrollbar">
       <div className="relative h-72 md:h-96">
         <img
           src={blog.coverImage}
@@ -101,7 +124,6 @@ export const BlogDetail = ({ blog, isLoading, onBack }: BlogDetailProps) => {
       </div>
       
       <div className="p-6 md:p-8 lg:p-12">
-        {/* Author Section */}
         <div className="flex items-start gap-4 p-6 rounded-lg bg-card border border-border mb-8">
           <img
             src={blog.author.avatar}
@@ -118,7 +140,6 @@ export const BlogDetail = ({ blog, isLoading, onBack }: BlogDetailProps) => {
           </div>
         </div>
         
-        {/* Story Content */}
         <div className="prose prose-invert prose-lg max-w-none">
           <p className="text-lg text-muted-foreground italic mb-8 border-l-4 border-primary pl-6">
             {blog.description}
