@@ -1,7 +1,7 @@
 import type { Blog } from '@/types/blog';
 import { useBlogs } from '@/hooks/useBlogs';
 import { GenreBadge } from './GenreBadge';
-import { Clock, Calendar, ArrowLeft, BookOpen, Sparkles, User } from 'lucide-react';
+import { Clock, Calendar, ArrowLeft, BookOpen, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
